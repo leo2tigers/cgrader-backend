@@ -1,0 +1,12 @@
+version: "3.2"
+
+services:
+  backend:
+    image: node:10-alpine
+    volumes:
+      - .:/server
+    command: sh -c 'cd server && yarn && yarn start:dev'
+    environment:
+      MONGO_URL:
+    ports:
+      - 3000:3000
