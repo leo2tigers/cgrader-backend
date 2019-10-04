@@ -6,7 +6,9 @@ import { ProblemSchema, ProblemModel } from './problem.schema';
 
 @Module({
     imports: [
-        MongooseModule.forFeature([{ name: ProblemModel, schema: ProblemSchema }]),
+        MongooseModule.forFeature([
+            { name: ProblemModel, schema: ProblemSchema },
+        ]),
     ],
     controllers: [ProblemController],
     providers: [ProblemService],
