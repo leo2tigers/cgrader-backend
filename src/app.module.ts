@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
+import { ProblemModule } from './problem/problem.module';
 import { ConfigModule } from './config/config.module';
 import { ConfigService } from './config/config.service';
 
@@ -18,6 +19,7 @@ import { ConfigService } from './config/config.service';
             }),
         }),
         ConfigModule,
+        ProblemModule,
     ],
     controllers: [AppController],
     providers: [AppService],
