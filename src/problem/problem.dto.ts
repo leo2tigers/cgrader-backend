@@ -1,4 +1,4 @@
-import { IsString } from 'class-validator';
+import { IsString, IsPositive, IsOptional } from 'class-validator';
 
 export class ProblemDto {
     @IsString()
@@ -6,4 +6,12 @@ export class ProblemDto {
 
     @IsString()
     code: string;
+
+    @IsOptional()
+    @IsPositive()
+    timeLimit: number;
+
+    @IsOptional()
+    @IsPositive()
+    memLimit: number;
 }
