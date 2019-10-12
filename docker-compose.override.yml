@@ -8,5 +8,8 @@ services:
     command: sh -c 'cd server && yarn && yarn start:dev'
     environment:
       MONGO_URL:
+      GCLOUD_PROJECT_ID:
+      GCLOUD_APP_CREDENTIALS:
+      GCLOUD_BUCKET_NAME:
     ports:
       - 3000:3000
