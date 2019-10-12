@@ -7,6 +7,7 @@ import { ConfigModule } from './config/config.module';
 import { ConfigService } from './config/config.service';
 import { FileModule } from './file/file.module';
 import { UserModule } from './user/user.module';
+import { SubmissionModule } from './submission/submission.module';
 
 @Module({
     imports: [
@@ -24,6 +25,7 @@ import { UserModule } from './user/user.module';
         ProblemModule,
         FileModule,
         UserModule,
+        SubmissionModule,
     ],
     controllers: [AppController],
     providers: [AppService],
