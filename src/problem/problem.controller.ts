@@ -9,22 +9,18 @@ import {
     UseInterceptors,
     UploadedFile,
     BadRequestException,
+    UploadedFiles,
 } from '@nestjs/common';
-import { FileInterceptor } from '@nestjs/platform-express';
+import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { ProblemService } from './problem.service';
 import { Problem } from './problem.interface';
 import { ProblemDto } from './problem.dto';
 import { FileDto, FileDetail } from '../file/file.dto';
-import { FileService } from '../file/file.service';
 import { join } from 'path';
-import { get } from 'http';
 
 @Controller('problem')
 export class ProblemController {
-    constructor(
-        private readonly service: ProblemService,
-        private readonly fileService: FileService,
-    ) {}
+    constructor(private readonly service: ProblemService) {}
 
     @Get()
     find(): Promise<Problem[]> {
@@ -38,7 +34,7 @@ export class ProblemController {
 
     @Get(':id/file')
     getFileUrl(@Param('id') id: string): Promise<FileDetail> {
-        return this.fileService.getFileUrl(id);
+        return this.service.getFileUrl(id);
     }
 
     @Post()
@@ -56,16 +52,33 @@ export class ProblemController {
 
     @Patch(':id/file')
     @UseInterceptors(
-        FileInterceptor('file', { dest: join(__dirname, './upload') }),
+        FileInterceptor('file', { dest: join(__dirname, '../../upload') }),
     )
     async uploadProblem(
         @UploadedFile() file: FileDto,
         @Param('id') id: string,
     ) {
         if (file) {
-            await this.fileService.uploadFile(id, file);
+            await this.service.uploadProblem(id, file);
         } else {
-            throw new BadRequestException('File not found');
+            throw new BadRequestException('No files uploaded');
+        }
+    }
+
+    @Patch(':id/testcase')
+    @UseInterceptors(
+        FilesInterceptor('files', 50, {
+            dest: join(__dirname, '../../upload'),
+        }),
+    )
+    async addTestCases(
+        @UploadedFiles() files: FileDto[],
+        @Param('id') id: string,
+    ) {
+        if (files.length > 0) {
+            // gonna do something
+        } else {
+            throw new BadRequestException('No files uploaded');
         }
     }
 

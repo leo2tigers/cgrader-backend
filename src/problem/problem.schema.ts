@@ -13,5 +13,8 @@ export const ProblemSchema = new Schema({
         type: Number,
         default: 512,
     },
-    fileUrl: String,
+    testCases: {
+        type: Number,
+        default: 10,
+    },
 });
