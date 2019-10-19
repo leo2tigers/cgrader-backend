@@ -43,4 +43,8 @@ export class FileService {
         });
         removeSync(file.path);
     }
+
+    async deleteFolder(prefix: string) {
+        await this.bucket.deleteFiles({ prefix });
+    }
 }

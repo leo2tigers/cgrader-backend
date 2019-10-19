@@ -58,7 +58,9 @@ export class ProblemService {
         );
     }
 
-    delete(id: string) {
+    async delete(id: string) {
+        const problem = await this.findById(id);
+        this.fileService.deleteFolder(problem.code);
         return this.model.findByIdAndDelete(id).exec();
     }
 }
