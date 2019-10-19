@@ -7,6 +7,7 @@ import { ConfigModule } from './config/config.module';
 import { ConfigService } from './config/config.service';
 import { FileModule } from './file/file.module';
 import { UserModule } from './user/user.module';
+import { AuthModule } from './auth/auth.module';
 import { JwtAuthModule } from './jwt-auth/jwt-auth.module';
 
 @Module({
@@ -25,6 +26,7 @@ import { JwtAuthModule } from './jwt-auth/jwt-auth.module';
         ProblemModule,
         FileModule,
         UserModule,
+        AuthModule,
         JwtAuthModule,
     ],
     controllers: [AppController],
