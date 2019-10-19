@@ -11,5 +11,10 @@ services:
       GCLOUD_PROJECT_ID:
       GCLOUD_APP_CREDENTIALS:
       GCLOUD_BUCKET_NAME:
+      AUTH_URL: https://authapi.monkeyfhb.com
+      AUTH_APP_ID:
+      AUTH_APP_SECRET:
+      CLIENT_URL:
+      SERVER_URL:
     ports:
       - 3000:3000

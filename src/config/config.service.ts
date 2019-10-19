@@ -26,4 +26,24 @@ export class ConfigService {
     get gcloudBucketName(): string {
         return this.getEnv('GCLOUD_BUCKET_NAME');
     }
+
+    get authUrl(): string {
+        return this.getEnv('AUTH_URL');
+    }
+
+    get authAppId(): string {
+        return this.getEnv('AUTH_APP_ID');
+    }
+
+    get authAppSecret(): string {
+        return this.getEnv('AUTH_APP_SECRET');
+    }
+
+    get clientUrl(): string {
+        return this.getEnv('CLIENT_URL');
+    }
+
+    get serverUrl(): string {
+        return this.getEnv('SERVER_URL');
+    }
 }
