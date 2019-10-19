@@ -46,6 +46,18 @@ export class ProblemService {
         await this.fileService.uploadFile(`${problem.code}/problem`, file);
     }
 
+    async uploadTestCases(id: string, files: FileDto[]) {
+        const problem = await this.findById(id);
+        await Promise.all(
+            files.map(file =>
+                this.fileService.uploadFile(
+                    `${problem.code}/testcases/${file.originalname}`,
+                    file,
+                ),
+            ),
+        );
+    }
+
     delete(id: string) {
         return this.model.findByIdAndDelete(id).exec();
     }

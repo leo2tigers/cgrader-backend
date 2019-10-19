@@ -76,7 +76,7 @@ export class ProblemController {
         @Param('id') id: string,
     ) {
         if (files.length > 0) {
-            // gonna do something
+            await this.service.uploadTestCases(id, files);
         } else {
             throw new BadRequestException('No files uploaded');
         }
