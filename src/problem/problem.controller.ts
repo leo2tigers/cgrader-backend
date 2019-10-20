@@ -27,14 +27,14 @@ export class ProblemController {
         return this.service.find();
     }
 
-    @Get(':id')
-    findById(@Param('id') id: string): Promise<Problem> {
-        return this.service.findById(id);
+    @Get(':code')
+    findByCode(@Param('code') code: string): Promise<Problem> {
+        return this.service.findByCode(code);
     }
 
-    @Get(':id/file')
-    getFileUrl(@Param('id') id: string): Promise<FileDetail> {
-        return this.service.getFileUrl(id);
+    @Get(':code/file')
+    getFileUrl(@Param('code') code: string): Promise<FileDetail> {
+        return this.service.getFileUrl(code);
     }
 
     @Post()
@@ -42,30 +42,30 @@ export class ProblemController {
         return this.service.create(problemDto);
     }
 
-    @Patch(':id')
+    @Patch(':code')
     update(
-        @Param('id') id: string,
+        @Param('code') code: string,
         @Body() problemDto: Partial<ProblemDto>,
     ): Promise<Problem> {
-        return this.service.update(id, problemDto);
+        return this.service.update(code, problemDto);
     }
 
-    @Patch(':id/file')
+    @Patch(':code/file')
     @UseInterceptors(
         FileInterceptor('file', { dest: join(__dirname, '../../upload') }),
     )
     async uploadProblem(
         @UploadedFile() file: FileDto,
-        @Param('id') id: string,
+        @Param('code') code: string,
     ) {
         if (file) {
-            await this.service.uploadProblem(id, file);
+            await this.service.uploadProblem(code, file);
         } else {
             throw new BadRequestException('No files uploaded');
         }
     }
 
-    @Patch(':id/testcase')
+    @Patch(':code/testcase')
     @UseInterceptors(
         FilesInterceptor('files', 50, {
             dest: join(__dirname, '../../upload'),
@@ -73,17 +73,17 @@ export class ProblemController {
     )
     async addTestCases(
         @UploadedFiles() files: FileDto[],
-        @Param('id') id: string,
+        @Param('code') code: string,
     ) {
         if (files.length > 0) {
-            await this.service.uploadTestCases(id, files);
+            await this.service.uploadTestCases(code, files);
         } else {
             throw new BadRequestException('No files uploaded');
         }
     }
 
-    @Delete(':id')
-    delete(@Param('id') id: string) {
-        return this.service.delete(id);
+    @Delete(':code')
+    delete(@Param('code') code: string) {
+        return this.service.delete(code);
     }
 }

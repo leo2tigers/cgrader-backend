@@ -14,4 +14,8 @@ export class ProblemDto {
     @IsOptional()
     @IsPositive()
     memLimit: number;
+
+    @IsOptional()
+    @IsPositive()
+    testCases: number;
 }

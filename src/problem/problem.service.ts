@@ -22,11 +22,14 @@ export class ProblemService {
         return this.model.findById(id).exec();
     }
 
-    async getFileUrl(id: string): Promise<FileDetail> {
-        const problem = await this.findById(id);
+    findByCode(code: string): Promise<Problem> {
+        return this.model.findOne({ code }).exec();
+    }
+
+    async getFileUrl(code: string): Promise<FileDetail> {
         try {
-            return this.fileService.getFileUrl(`${problem.code}/problem`);
-        } catch (_) {
+            return this.fileService.getFileUrl(`${code}/problem`);
+        } catch {
             throw new NotFoundException('File not found');
         }
     }
@@ -36,31 +39,28 @@ export class ProblemService {
         return problem.save();
     }
 
-    update(id: string, problemDto: Partial<ProblemDto>): Promise<Problem> {
+    update(code: string, problemDto: Partial<ProblemDto>): Promise<Problem> {
         return this.model
-            .findByIdAndUpdate(id, problemDto, { new: true })
+            .findOneAndUpdate({ code }, problemDto, { new: true })
             .exec();
     }
-    async uploadProblem(id: string, file: FileDto) {
-        const problem = await this.findById(id);
-        await this.fileService.uploadFile(`${problem.code}/problem`, file);
+    async uploadProblem(code: string, file: FileDto) {
+        await this.fileService.uploadFile(`${code}/problem`, file);
     }
 
-    async uploadTestCases(id: string, files: FileDto[]) {
-        const problem = await this.findById(id);
+    async uploadTestCases(code: string, files: FileDto[]) {
         await Promise.all(
             files.map(file =>
                 this.fileService.uploadFile(
-                    `${problem.code}/testcases/${file.originalname}`,
+                    `${code}/testcases/${file.originalname}`,
                     file,
                 ),
             ),
         );
     }
 
-    async delete(id: string) {
-        const problem = await this.findById(id);
-        this.fileService.deleteFolder(problem.code);
-        return this.model.findByIdAndDelete(id).exec();
+    async delete(code: string) {
+        this.fileService.deleteFolder(code);
+        return this.model.findOneAndDelete({ code }).exec();
     }
 }

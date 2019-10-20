@@ -5,5 +5,6 @@ export interface Problem extends Document {
     code: string;
     timeLimit: number;
     memLimit: number;
+    testCases: number;
     fileUrl: string;
 }
