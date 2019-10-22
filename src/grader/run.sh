@@ -1,14 +1,13 @@
-g++ -o src src.c -O2 -w
-cd test
+cd tests
 tests=$(ls -1 | sed -e 's/\..*$//' | sort | uniq)
 cd ..
 result=""
 for test in $tests; do
-    testResult=$(timeout 1 ./src < ./test/$test.in)
-    if [[ -z $testResult ]]; then
+    testResult=$(timeout 1 ./src < ./tests/$test.in || [ $? -eq 124 ] && echo "TLE")
+    if [[ "$testResult" == "TLE" ]]; then
         result=$result"T"
     else
-        testCase=$(cat ./test/$test.out)
+        testCase=$(cat ./tests/$test.out)
         if [[ "$testResult" == "$testCase" ]]	
         then
             result=$result"P"
